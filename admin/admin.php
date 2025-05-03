@@ -1,16 +1,6 @@
-<?php
-// Koneksi database
-$db = mysqli_connect("localhost", "root", "", "todo"); // username default = root, password = kosong, nama db = todo
-
-// ambil/query data dari tabel users
-$result = mysqli_query($db, "SELECT * FROM users"); //query untuk menampilkan data dari tabel user
-if(!$result) {
-    echo mysqli_error($db); //jika gagal query untuk menampilkan data, tampilkan error
-}
-// // ambil (fetch) data users dari objek result
-// while ($usr = mysqli_fetch_assoc($result)){// mengembalikan array asosiatif (nama kolom) dari hasil query
-//     var_dump($usr["username"]); // menampilkan data hasil query ke layar
-// }
+<?php 
+require 'functions.php'; // memanggil file functions.php untuk digunakan di halaman admin
+$users = query("SELECT * FROM users"); // query untuk menampilkan data dari tabel user
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +21,7 @@ if(!$result) {
         <th>Aksi</th>
     </tr>
 <?php $i = 1; ?>
-    <?php while ($row = mysqli_fetch_assoc($result)) :?>
+    <?php foreach($users as $row):?>
     <tr>
         <td><?= $i;?></td>
         <td><?= $row["username"];?></td>
@@ -40,7 +30,7 @@ if(!$result) {
         <a href="">Selesai</a></td>
     </tr>
     <?php $i++; ?>
-    <?php  endwhile; ?>
+    <?php  endforeach; ?>
 </table>
 
 
