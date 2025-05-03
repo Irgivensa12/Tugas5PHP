@@ -18,5 +18,15 @@ function query($query) {
     }
     return $rows; // mengembalikan data yang sudah diambil dari database
 }
+function tambah($data) {
+    global $db; 
+    $username = htmlspecialchars($data["username"]); // htmlspecialchars untuk menghindari XSS (Cross-Site Scripting)
+    $password = htmlspecialchars($data["password"]);
 
+// query untuk menambahkan data ke dalam tabel users
+$query = "INSERT INTO users VALUES ('', '$username', '$password')"; // kolom id kosongkan krn otomats
+mysqli_query($db, $query); // eksekusi query
+
+return mysqli_affected_rows($db); // mengembalikan jumlah baris yang terpengaruh oleh query terakhir
+}
 ?>

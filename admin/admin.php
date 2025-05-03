@@ -12,6 +12,9 @@ $users = query("SELECT * FROM users"); // query untuk menampilkan data dari tabe
 </head>
 <body>
     <h1> Daftar User </h1>
+<a href="tambah.php"> Tambah User </a>
+<br><br>
+
 <table border="1" cellpadding= "10" cellspacing= "0">
 
     <tr>
