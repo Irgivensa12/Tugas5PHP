@@ -29,4 +29,10 @@ mysqli_query($db, $query); // eksekusi query
 
 return mysqli_affected_rows($db); // mengembalikan jumlah baris yang terpengaruh oleh query terakhir
 }
+
+function hapus($id) {
+    global $db; // mengglobalkan variabel db agar bisa digunakan dalam function
+    mysqli_query($db, "DELETE FROM users WHERE id = $id"); // query untuk menghapus data dari tabel users berdasarkan id
+    return mysqli_affected_rows($db); // mengembalikan jumlah baris yang terpengaruh oleh query terakhir
+}
 ?>
