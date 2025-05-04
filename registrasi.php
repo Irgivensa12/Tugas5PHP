@@ -1,3 +1,22 @@
+<?php 
+require 'admin/functions.php';
+
+// kondisi jika tombol register ditekan
+
+if(isset($_POST["register"])) {
+
+    if(register($_POST) > 0) {
+        echo "<script>
+                alert('User baru berhasil ditambahkan!');
+                document.location.href = 'admin.php'; 
+            </script>"; // jika berhasil, kembali ke halaman admin.php
+}
+    else {
+        echo mysqli_error($db); //jika gagal query untuk menampilkan data, tampilkan error
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
