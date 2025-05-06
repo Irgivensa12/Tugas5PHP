@@ -1,4 +1,10 @@
 <?php 
+session_start(); // memulai session agar bisa menggunakan session
+
+if(isset($_SESSION["login"])) { // jika session login sudah ada
+    header("Location: admin/admin.php"); // redirect ke halaman admin
+    exit; // hentikan script
+}
 require 'admin/functions.php';
 
 // cek apakah tombol login sudah ditekan atau belum
@@ -7,7 +13,7 @@ if(isset($_POST["login"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-   $result = mysqli_query($db, "SELECT * FROM users WHERE username = '$username' AND password = '$password'");
+   $result = mysqli_query($db, "SELECT * FROM users WHERE username = '$username'");
 
     // cek username dan password
     if(mysqli_num_rows($result) === 1) { // untuk menghitung jumlah baris yang dikembalikan oleh query (ketemu nilai = 1)
@@ -15,6 +21,10 @@ if(isset($_POST["login"])) {
     // cek password
     $row = mysqli_fetch_assoc($result); // ambil data dari database
     if(password_verify($password, $row["password"])){ // untuk cek sebuah string sama atau tidak dengan hash password yang ada di database
+        
+        // set session
+        $_SESSION["login"] = true; // cek session login di tiap halaman
+        $loginSuccess = true; // jika login berhasil, set session login menjadi true
         header("Location: admin/admin.php"); // jika password benar, redirect ke halaman admin
     exit; // hentikan script
     } 
@@ -40,7 +50,7 @@ if(isset($_POST["login"])) {
     if(isset($eror)) : ?>
         <p style="color: red; font-style: italic;">Username atau password salah!</p>
     <?php endif; ?>
-    
+
     <!-- form untuk login -->
 <form action="" method="post">
     <ul>
@@ -56,29 +66,6 @@ if(isset($_POST["login"])) {
             <button type="submit" name="login">Login</button>
         </li>
     </ul>
-
-    <?php
-    // jika tombol login ditekan
-    if(isset($_POST["login"])) {
-        $username = $_POST["username"];
-        $password = $_POST["password"];
-
-        // query untuk menampilkan data dari tabel users berdasarkan username dan password
-        $result = mysqli_query($db, "SELECT * FROM users WHERE username = '$username' AND password = '$password'");
-
-        // jika data ditemukan
-        if(mysqli_num_rows($result) > 0) {
-            echo "<script>alert('Login berhasil!');</script>";
-            // redirect ke halaman admin
-            header("Location: admin/admin.php");
-            exit;
-        } else {
-            echo "<script>alert('Username atau password salah!');</script>";
-        }
-    }
-    ?>
-
-
 </form>
 
 </body>

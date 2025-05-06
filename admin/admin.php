@@ -1,4 +1,9 @@
 <?php 
+session_start(); // memulai session
+if(!isset($_SESSION["login"])) { // jika session login belum ada
+    header("Location: ../login.php"); // redirect ke halaman login.php
+    exit; // menghentikan script
+}
 require 'functions.php'; // memanggil file functions.php untuk digunakan di halaman admin
 $users = query("SELECT * FROM users"); // query untuk menampilkan data dari tabel user
 ?>
@@ -11,6 +16,8 @@ $users = query("SELECT * FROM users"); // query untuk menampilkan data dari tabe
     <title>Halaman Admin</title>
 </head>
 <body>
+
+<a href="../logout.php">Logout</a>
     <h1> Daftar User </h1>
 <a href="tambah.php"> Tambah User </a>
 <br><br>
